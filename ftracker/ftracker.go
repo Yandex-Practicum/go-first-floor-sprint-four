@@ -80,13 +80,12 @@ const (
 // action int — количество совершенных действий(число шагов при ходьбе и беге, либо гребков при плавании).
 // weight float64 — вес пользователя.
 // duration float64 — длительность тренировки в часах.
+// формула: ((18 * СредняяСкоростьВКм/ч * 1.79) * ВесСпортсменаВКг / mInKM * ВремяТренировкиВЧасах * minInH)
 func RunningSpentCalories(action int, weight, duration float64) float64 {
 	// ваш код здесь
 	meanSpeed := meanSpeed(action, duration)
 	return (runningCaloriesMeanSpeedMultiplier * meanSpeed * runningCaloriesMeanSpeedShift) * weight / mInKm * duration * minInH
 }
-
-//((18 * СредняяСкоростьВКм/ч * 1.79) * ВесСпортсменаВКг / mInKM * ВремяТренировкиВЧасах * minInH)
 
 // Константы для расчета калорий, расходуемых при ходьбе.
 const (
@@ -102,12 +101,12 @@ const (
 // duration float64 — длительность тренировки в часах.
 // weight float64 — вес пользователя.
 // height float64 — рост пользователя.
+// формула: ((0.035 * ВесСпортсменаВКг + (СредняяСкоростьВМетрахВСекунду**2 / РостВМетрах) * 0.029 * ВесСпортсменаВКг) * ВремяТренировкиВЧасах * minInH)
 func WalkingSpentCalories(action int, duration, weight, height float64) float64 {
 	// ваш код здесь
 	meanSpeed := meanSpeed(action, duration)
 	return (walkingCaloriesWeightMultiplier*weight + (math.Pow(meanSpeed*kmhInMsec, 2)/(height/cmInM))*
 		walkingSpeedHeightMultiplier*weight) * duration * minInH
-	// ((0.035 * ВесСпортсменаВКг + (СредняяСкоростьВМетрахВСекунду**2 / РостВМетрах) * 0.029 * ВесСпортсменаВКг) * ВремяТренировкиВЧасах * minInH)
 }
 
 // Константы для расчета калорий, расходуемых при плавании.
@@ -139,9 +138,9 @@ func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 // countPool int — сколько раз пользователь переплыл бассейн.
 // duration float64 — длительность тренировки в часах.
 // weight float64 — вес пользователя.
+// формула: (СредняяСкоростьВКм/ч + 1.1) * 2 * ВесСпортсменаВКг * ВремяТренеровкиВЧасах
 func SwimmingSpentCalories(lenghtPool, countPool int, duration, weight float64) float64 {
 	// ваш код здесь
 	meanSpeed := swimmingMeanSpeed(lenghtPool, countPool, duration)
 	return (meanSpeed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
-	//(СредняяСкоростьВКм/ч + 1.1) * 2 * ВесСпортсменаВКг * ВремяТренеровкиВЧасах
 }
