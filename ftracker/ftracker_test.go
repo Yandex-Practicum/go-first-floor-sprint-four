@@ -47,7 +47,7 @@ func Test_distance(t *testing.T) {
 
 func Test_meanSpeed(t *testing.T) {
 	type args struct {
-		action   int
+		distance float64
 		duration float64
 	}
 	tests := []struct {
@@ -59,7 +59,7 @@ func Test_meanSpeed(t *testing.T) {
 		{
 			name: "Successful test",
 			args: args{
-				action:   2000,
+				distance: 1.3,
 				duration: 2.0,
 			},
 			want: 0.65,
@@ -67,7 +67,7 @@ func Test_meanSpeed(t *testing.T) {
 		{
 			name: "Null duration",
 			args: args{
-				action:   2000,
+				distance: 1.3,
 				duration: 0,
 			},
 			want: 0,
@@ -75,7 +75,7 @@ func Test_meanSpeed(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := meanSpeed(tt.args.action, tt.args.duration); got != tt.want {
+			if got := meanSpeed(tt.args.distance, tt.args.duration); got != tt.want {
 				t.Errorf("meanSpeed() = %v, want %v", got, tt.want)
 			}
 		})
@@ -165,8 +165,8 @@ func TestShowTrainingInfo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ShowTrainingInfo(tt.args.action, tt.args.trainingType, tt.args.duration, tt.args.weight, tt.args.height, tt.args.lengthPool, tt.args.countPool); got != tt.want {
-				t.Errorf("ShowTrainingInfo() = %v, want %v", got, tt.want)
+			if got := showTrainingInfo(tt.args.action, tt.args.trainingType, tt.args.duration, tt.args.weight, tt.args.height, tt.args.lengthPool, tt.args.countPool); got != tt.want {
+				t.Errorf("showTrainingInfo() = %v, want %v", got, tt.want)
 			}
 		})
 	}
